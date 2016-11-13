@@ -7,10 +7,12 @@ function addpost(text){
     id: null,
     comments: [],
     addComment: function (comment, user) {
+
     var comment = {
       usercomment: comment,
       user: user
     };
+    this.comments.push(comment);
   }
 };
   if(posts.length === 0){
@@ -29,13 +31,13 @@ function updatePosts(){
     $('.posts').append(post);
 
 //Append comment
-  if (posts.comments !== undefined)
-    for(i = 0; i<posts.comments.length; i++){
-    post.append(posts.comments[i]);
+  if (posts[i].comments !== undefined)
+    for(j = 0; j<posts[i].comments.length; j++){
+    post.append(posts[i].comments[j].usercomment);
   };
 //create comment
     var usercomment = $("<input class='comment' />");
-    usercomment.data("commentId", posts[i].id);
+    usercomment.data("postId", posts[i].id);
     usercomment.attr("placeholder", "Write a comment...");
     post.append("</br>");
     post.append(usercomment);
@@ -65,7 +67,7 @@ function removeButton(){
 function bindComment(){
 $('.comment').keypress(function(event){
   if((event.keyCode || event.which) == 13){
-    var target = $(this).data("commentId"); //add comment to object
+    var target = $(this).data("postId"); //add comment to object
     posts[target].addComment($(this).val());
     updatePosts();
     }
